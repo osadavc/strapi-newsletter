@@ -16,20 +16,33 @@ export default {
         defaultMessage: "Strapi Newsletter",
       },
       Component: async () => {
-        const component = await import(
-          /* webpackChunkName: "[request]" */ "./pages/App"
-        );
-
+        const component = await import("./pages/App");
         return component;
       },
-      permissions: [
-        // Uncomment to set the permissions of the plugin here
-        // {
-        //   action: '', // the action name should be plugin::plugin-name.actionType
-        //   subject: null,
-        // },
-      ],
+      permissions: [],
     });
+    app.createSettingSection(
+      {
+        id: pluginId,
+        intlLabel: {
+          id: `${pluginId}.plugin.name`,
+          defaultMessage: "Strapi Newsletter",
+        },
+      },
+      [
+        {
+          intlLabel: {
+            id: `${pluginId}.plugin.name`,
+            defaultMessage: "Settings",
+          },
+          id: "settings",
+          to: `/settings/${pluginId}`,
+          Component: async () => {
+            return import("./pages/Settings");
+          },
+        },
+      ]
+    );
     app.registerPlugin({
       id: pluginId,
       initializer: Initializer,
@@ -37,7 +50,6 @@ export default {
       name,
     });
   },
-
   bootstrap(app) {},
   async registerTrads({ locales }) {
     const importedTrads = await Promise.all(
