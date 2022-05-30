@@ -1,7 +1,9 @@
-'use strict';
+"use strict";
 
-const myService = require('./my-service');
+const settings = require("./settings");
+const mailchimp = require("./mailchimp");
 
 module.exports = {
-  myService,
+  settings,
+  mailchimp,
 };

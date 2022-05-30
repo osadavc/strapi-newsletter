@@ -11,7 +11,17 @@ import {
   Box,
 } from "@strapi/design-system";
 
-import { ButtonContainer, InputContainer, StyledTypography } from "./styles";
+import {
+  ButtonContainer,
+  InputContainer,
+  StyledAlert,
+  StyledTypography,
+} from "./styles";
+import {
+  checkMailchimpConnection,
+  getSettings,
+  setSettings,
+} from "../../utils/api";
 
 const Settings = () => {
   const [selectedProvider, setSelectedProvider] = React.useState();
@@ -20,6 +30,9 @@ const Settings = () => {
     dc: "",
   });
   const [keys, setKeys] = React.useState({});
+
+  const [successfulMessage, setSuccessfulMessage] = React.useState(false);
+  const [isError, setIsError] = React.useState(false);
 
   const providers = ["mailchimp", "convert-kit", "mailer-lite"];
 
@@ -32,6 +45,16 @@ const Settings = () => {
         }
 
         return true;
+      },
+      checkConnection: async () => {
+        try {
+          await checkMailchimpConnection();
+          setIsError(false);
+          setSuccessfulMessage("Connection Successful");
+        } catch (error) {
+          setIsError(true);
+          setSuccessfulMessage(null);
+        }
       },
       renderView: () => (
         <InputContainer>
@@ -77,6 +100,35 @@ const Settings = () => {
     },
   };
 
+  React.useEffect(() => {
+    getUserSettings();
+  }, []);
+
+  const getUserSettings = async () => {
+    const {
+      data: { provider, ...data },
+    } = await getSettings();
+
+    setKeys(data);
+    setFields(data);
+    setSelectedProvider(provider);
+  };
+
+  const setUserSettings = async () => {
+    const { data, status } = await setSettings({
+      ...fields,
+      provider: selectedProvider,
+    });
+
+    try {
+      setKeys(data);
+      setSuccessfulMessage("Settings saved successfully");
+    } catch (error) {
+      setIsError(true);
+      setSuccessfulMessage(null);
+    }
+  };
+
   return (
     <Layout>
       <BaseHeaderLayout
@@ -85,6 +137,32 @@ const Settings = () => {
       />
 
       <ContentLayout>
+        {successfulMessage && (
+          <StyledAlert
+            closeLabel="Close alert"
+            title="Success"
+            variant="success"
+            onClose={() => {
+              setSuccessfulMessage(null);
+            }}
+          >
+            {successfulMessage}
+          </StyledAlert>
+        )}
+
+        {isError && (
+          <StyledAlert
+            closeLabel="Close alert"
+            title="Error"
+            variant="danger"
+            onClose={() => {
+              setIsError(false);
+            }}
+          >
+            Error occurred, Please check your settings
+          </StyledAlert>
+        )}
+
         <Box padding={8} shadow="tableShadow" background="neutral0" hasRadius>
           <Select
             label="Email Newsletter Provider"
@@ -112,11 +190,13 @@ const Settings = () => {
 
           <ButtonContainer>
             <Button
-              onClick={() => {
+              onClick={async () => {
                 const validateResponse =
                   providerFunctions[selectedProvider].validator();
 
                 if (!validateResponse) return;
+
+                await setUserSettings();
               }}
             >
               Save Keys
@@ -124,6 +204,9 @@ const Settings = () => {
             <Button
               variant="tertiary"
               disabled={Object.entries(keys).length == 0}
+              onClick={() => {
+                providerFunctions[selectedProvider].checkConnection();
+              }}
             >
               Check Connection
             </Button>

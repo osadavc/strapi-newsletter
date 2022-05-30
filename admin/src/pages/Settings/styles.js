@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Typography } from "@strapi/design-system";
+import { Typography, Alert } from "@strapi/design-system";
 
 export const InputContainer = styled.div`
   margin-top: 35px;
@@ -20,4 +20,8 @@ export const ButtonContainer = styled.div`
 
 export const StyledTypography = styled(Typography)`
   margin-top: 15px;
+`;
+
+export const StyledAlert = styled(Alert)`
+  margin-bottom: 30px;
 `;

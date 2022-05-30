@@ -1,7 +1,9 @@
-'use strict';
+"use strict";
 
-const myController = require('./my-controller');
+const settings = require("./settings");
+const mailchimp = require("./mailchimp");
 
 module.exports = {
-  myController,
+  settings,
+  mailchimp,
 };
