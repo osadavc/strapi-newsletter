@@ -18,6 +18,11 @@ module.exports = [
   },
   {
     method: "GET",
+    path: "/setup",
+    handler: "settings.getSetup",
+  },
+  {
+    method: "GET",
     path: "/mailchimp/ping",
     handler: "mailchimp.checkConnection",
   },

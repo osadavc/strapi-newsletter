@@ -21,4 +21,14 @@ module.exports = () => ({
 
     return body;
   },
+  async getSetup() {
+    const pluginStore = getPluginStore();
+    const setup = await pluginStore.get({ key: "settings" });
+
+    if (setup && setup.provider) {
+      return setup.provider;
+    }
+
+    return false;
+  },
 });
