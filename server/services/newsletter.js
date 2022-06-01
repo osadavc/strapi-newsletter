@@ -14,7 +14,16 @@ module.exports = ({ strapi }) => ({
       throw new Error("Email is required");
     }
 
-    const provider = (await getPluginStore().get({ key: "settings" })).provider;
+    const { provider } = await getPluginStore().get({ key: "settings" });
+
+    switch (provider) {
+      case "mailchimp": {
+        await strapi
+          .plugin("strapi-newsletter")
+          .service("mailchimp")
+          .subscribeNewUser(body.email);
+      }
+    }
 
     return await strapi.entityService.create(
       "plugin::strapi-newsletter.subscribed-user",

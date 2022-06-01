@@ -28,6 +28,7 @@ const Settings = () => {
   const [fields, setFields] = React.useState({
     apiKey: "",
     dc: "",
+    listID: "",
   });
   const [keys, setKeys] = React.useState({});
 
@@ -40,7 +41,7 @@ const Settings = () => {
     mailchimp: {
       name: "Mailchimp",
       validator: () => {
-        if (!fields.apiKey || !fields.dc) {
+        if (!fields.apiKey || !fields.dc || !fields.listID) {
           return false;
         }
 
@@ -88,6 +89,32 @@ const Settings = () => {
               value={fields.dc}
             />
           </div>
+
+          <div>
+            <TextInput
+              placeholder="List ID"
+              label="List ID"
+              required
+              onChange={(e) =>
+                setFields((prev) => ({
+                  ...prev,
+                  listID: e.target.value,
+                }))
+              }
+              value={fields.listID}
+            />
+          </div>
+
+          <StyledTypography as="h3">
+            Read{" "}
+            <a
+              href="https://mailchimp.com/en-gb/help/find-audience-id/"
+              target="_blank"
+            >
+              here
+            </a>{" "}
+            to learn how to get the list ID from mailchimp.
+          </StyledTypography>
         </InputContainer>
       ),
     },
@@ -116,7 +143,7 @@ const Settings = () => {
   };
 
   const setUserSettings = async () => {
-    const { data, status } = await setSettings({
+    const { data } = await setSettings({
       ...fields,
       provider: selectedProvider,
     });
