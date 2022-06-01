@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 
 import {
   Layout,
@@ -70,6 +70,7 @@ const Settings = () => {
                 }))
               }
               value={fields.apiKey}
+              type="password"
             />
           </div>
 
@@ -203,7 +204,10 @@ const Settings = () => {
             </Button>
             <Button
               variant="tertiary"
-              disabled={Object.entries(keys).length == 0}
+              disabled={
+                Object.entries(keys).length == 0 ||
+                fields.apiKey !== keys.apiKey
+              }
               onClick={() => {
                 providerFunctions[selectedProvider].checkConnection();
               }}
@@ -217,4 +221,4 @@ const Settings = () => {
   );
 };
 
-export default Settings;
+export default memo(Settings);

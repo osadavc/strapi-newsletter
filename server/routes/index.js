@@ -1,20 +1,22 @@
 module.exports = [
   {
-    method: "GET",
-    path: "/settings",
-    handler: "settings.getSettings",
+    method: "POST",
+    path: "/subscribe",
+    handler: "newsletter.subscribe",
     config: {
       policies: [],
       auth: false,
     },
   },
   {
+    method: "GET",
+    path: "/settings",
+    handler: "settings.getSettings",
+  },
+  {
     method: "POST",
     path: "/settings",
     handler: "settings.setSettings",
-    config: {
-      policies: [],
-    },
   },
   {
     method: "GET",

@@ -13,6 +13,7 @@ import Cog from "@strapi/icons/Cog";
 import { Link } from "react-router-dom";
 import { StyledLoadingContainer } from "./styles";
 import { getSetup } from "../../utils/api";
+import MainContainer from "./MainContainer";
 
 const HomePage = () => {
   const [hasSetup, setHasSetup] = React.useState(false);
@@ -37,7 +38,7 @@ const HomePage = () => {
             <Loader>Loading content...</Loader>
           </StyledLoadingContainer>
         ) : hasSetup ? (
-          <div></div>
+          <MainContainer />
         ) : (
           <Box padding={8}>
             <EmptyStateLayout
