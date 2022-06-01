@@ -1,10 +1,29 @@
 "use strict";
 
-module.exports = () => ({
-  async subscribe() {
-    return true;
+module.exports = ({ strapi }) => ({
+  async subscribe(body) {
+    if (!body.email) {
+      throw new Error("Email is required");
+    }
+
+    return await strapi.entityService.create(
+      "plugin::strapi-newsletter.subscribed-user",
+      {
+        data: {
+          email: body.email,
+        },
+      }
+    );
   },
-  async getSubscribedUsers(ctx) {},
-  async getAllNewsletter(ctx) {},
-  async sendNewsletter(ctx) {},
+  async getSubscribedUsers() {
+    return await strapi.entityService.findMany(
+      "plugin::strapi-newsletter.subscribed-user"
+    );
+  },
+  async getAllNewsletter() {
+    return await strapi.entityService.findMany(
+      "plugin::strapi-newsletter.newsletter"
+    );
+  },
+  async sendNewsletter() {},
 });
