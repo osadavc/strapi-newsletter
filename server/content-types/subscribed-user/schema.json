@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "subscribed_user",
+  "info": {
+    "singularName": "subscribed-user",
+    "pluralName": "subscribed-users",
+    "displayName": "Subscribed Users"
+  },
+  "options": {
+    "draftAndPublish": false,
+    "comment": ""
+  },
+  "pluginOptions": {
+    "content-manager": {
+      "visible": true
+    },
+    "content-type-builder": {
+      "visible": false
+    }
+  },
+  "attributes": {
+    "email": {
+      "type": "email",
+      "required": true
+    }
+  }
+}
