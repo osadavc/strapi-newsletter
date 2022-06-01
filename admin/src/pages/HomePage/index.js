@@ -6,6 +6,7 @@ import {
   EmptyStateLayout,
   Button,
   Loader,
+  BaseHeaderLayout,
 } from "@strapi/design-system";
 import SetupWizard from "../../components/SetupWizard";
 import Cog from "@strapi/icons/Cog";
@@ -28,6 +29,11 @@ const HomePage = () => {
 
   return (
     <Layout>
+      <BaseHeaderLayout
+        title="Strapi Newsletter"
+        subtitle="Notify all your users with a email as soon as you publish a new article !"
+      />
+
       <ContentLayout>
         {isLoading ? (
           <StyledLoadingContainer

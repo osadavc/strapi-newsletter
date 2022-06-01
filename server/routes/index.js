@@ -1,12 +1,27 @@
 module.exports = [
   {
     method: "POST",
-    path: "/subscribe",
+    path: "/newsletter/subscribe",
     handler: "newsletter.subscribe",
     config: {
       policies: [],
       auth: false,
     },
+  },
+  {
+    method: "GET",
+    path: "/newsletter/users",
+    handler: "newsletter.getSubscribedUsers",
+  },
+  {
+    method: "GET",
+    path: "/newsletter",
+    handler: "newsletter.getAllNewsletter",
+  },
+  {
+    method: "POST",
+    path: "/newsletter",
+    handler: "newsletter.sendNewsletter",
   },
   {
     method: "GET",
