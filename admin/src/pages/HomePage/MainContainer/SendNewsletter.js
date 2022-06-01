@@ -4,7 +4,7 @@ import { Box, TabPanel } from "@strapi/design-system";
 const SendNewsletter = () => {
   return (
     <TabPanel>
-      <Box color="neutral800" padding={8} background="neutral0">
+      <Box color="neutral800" paddingTop={8} background="neutral0">
         <h1>Hello</h1>
       </Box>
     </TabPanel>

@@ -23,6 +23,10 @@
       "type": "email",
       "required": true,
       "unique": true
+    },
+    "provider": {
+      "type": "string",
+      "required": true
     }
   }
 }

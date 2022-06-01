@@ -1,6 +1,7 @@
 import React, { memo } from "react";
 import { Box, Tabs, Tab, TabGroup, TabPanels } from "@strapi/design-system";
 import SendNewsletter from "./SendNewsletter";
+import SubscribedUsers from "./SubscribedUsers";
 
 const MainContainer = () => {
   return (
@@ -18,7 +19,7 @@ const MainContainer = () => {
         <TabPanels>
           <SendNewsletter />
           <SendNewsletter />
-          <SendNewsletter />
+          <SubscribedUsers />
         </TabPanels>
       </TabGroup>
     </Box>

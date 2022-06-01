@@ -7,3 +7,5 @@ export const setSettings = (data) => instance.post("/settings", data);
 export const getSetup = () => instance.get("/setup");
 
 export const checkMailchimpConnection = () => instance.get("/mailchimp/ping");
+
+export const getAllRegisteredUsers = () => instance.get("/newsletter/users");
