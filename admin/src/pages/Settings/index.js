@@ -19,23 +19,28 @@ import {
 } from "./styles";
 import {
   checkMailchimpConnection,
+  checkConvertKitConnection,
   getSettings,
   setSettings,
 } from "../../utils/api";
 
+const defaultSettings = {
+  apiKey: "",
+  apiSecret: "",
+  dc: "",
+  listID: "",
+  formId: "",
+};
+
 const Settings = () => {
   const [selectedProvider, setSelectedProvider] = React.useState();
-  const [fields, setFields] = React.useState({
-    apiKey: "",
-    dc: "",
-    listID: "",
-  });
+  const [fields, setFields] = React.useState(defaultSettings);
   const [keys, setKeys] = React.useState({});
 
   const [successfulMessage, setSuccessfulMessage] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
 
-  const providers = ["mailchimp", "convert-kit", "mailer-lite"];
+  const providers = ["mailchimp", "convertkit"];
 
   const providerFunctions = {
     mailchimp: {
@@ -118,13 +123,74 @@ const Settings = () => {
         </InputContainer>
       ),
     },
-    "convert-kit": {
+    convertkit: {
       name: "Convert Kit",
-      renderView: () => <div></div>,
-    },
-    "mailer-lite": {
-      name: "Mailer Lite",
-      renderView: () => <div></div>,
+      validator: () => {
+        if (!fields.apiKey || !fields.apiSecret || !fields.formId) {
+          return false;
+        }
+
+        return true;
+      },
+      checkConnection: async () => {
+        try {
+          await checkConvertKitConnection();
+          setIsError(false);
+          setSuccessfulMessage("Connection Successful");
+        } catch (error) {
+          setIsError(true);
+          setSuccessfulMessage(null);
+        }
+      },
+      renderView: () => (
+        <InputContainer>
+          <div>
+            <TextInput
+              placeholder="API Key"
+              label="API Key"
+              required
+              onChange={(e) =>
+                setFields((prev) => ({
+                  ...prev,
+                  apiKey: e.target.value,
+                }))
+              }
+              value={fields.apiKey}
+            />
+          </div>
+
+          <div>
+            <TextInput
+              placeholder="API Secret"
+              label="API Secret"
+              required
+              onChange={(e) =>
+                setFields((prev) => ({
+                  ...prev,
+                  apiSecret: e.target.value,
+                }))
+              }
+              value={fields.apiSecret}
+              type="password"
+            />
+          </div>
+
+          <div>
+            <TextInput
+              placeholder="Form ID"
+              label="Form ID"
+              required
+              onChange={(e) =>
+                setFields((prev) => ({
+                  ...prev,
+                  formId: e.target.value,
+                }))
+              }
+              value={fields.formId}
+            />
+          </div>
+        </InputContainer>
+      ),
     },
   };
 
@@ -196,7 +262,11 @@ const Settings = () => {
             label="Email Newsletter Provider"
             value={selectedProvider}
             onChange={(e) => {
-              console.log(e);
+              if (e != selectedProvider) {
+                setFields(defaultSettings);
+              } else {
+                setFields(keys);
+              }
               setSelectedProvider(e);
             }}
           >

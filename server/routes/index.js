@@ -43,4 +43,9 @@ module.exports = [
     path: "/mailchimp/ping",
     handler: "mailchimp.checkConnection",
   },
+  {
+    method: "GET",
+    path: "/convertkit/ping",
+    handler: "convertkit.checkConnection",
+  },
 ];

@@ -62,6 +62,10 @@ module.exports = () => ({
       const pluginStore = getPluginStore();
       const config = await pluginStore.get({ key: "settings" });
 
+      if (config.provider != "mailchimp") {
+        throw new Error("Provider is not mailchimp");
+      }
+
       mailchimp.setConfig({
         apiKey: config.apiKey,
         server: config.dc,
