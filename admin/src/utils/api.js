@@ -11,3 +11,5 @@ export const checkMailchimpConnection = () => instance.get("/mailchimp/ping");
 export const getAllRegisteredUsers = () => instance.get("/newsletter/users");
 
 export const getSentNewsletter = () => instance.get("/newsletter");
+
+export const sendNewsletter = (data) => instance.post("/newsletter", data);
