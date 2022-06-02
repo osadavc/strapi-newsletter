@@ -45,5 +45,29 @@ module.exports = ({ strapi }) => ({
       "plugin::strapi-newsletter.newsletter"
     );
   },
-  async sendNewsletter() {},
+  async sendNewsletter(body, user) {
+    if (!body.body || !body.subject) {
+      throw new Error("Body and/or Subject are required");
+    }
+
+    const { provider } = await getPluginStore().get({ key: "settings" });
+
+    switch (provider) {
+      case "mailchimp": {
+        await strapi
+          .plugin("strapi-newsletter")
+          .service("mailchimp")
+          .sendNewsletter(body, user);
+      }
+    }
+
+    return await strapi.entityService.create(
+      "plugin::strapi-newsletter.newsletter",
+      {
+        data: {
+          subject: body.subject,
+        },
+      }
+    );
+  },
 });

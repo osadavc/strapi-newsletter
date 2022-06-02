@@ -54,7 +54,45 @@ module.exports = () => ({
       return response;
     } catch (err) {
       console.log(err);
-      throw new Error(err.toString());
+      throw new Error(err);
+    }
+  },
+  async sendNewsletter(body, user) {
+    try {
+      const pluginStore = getPluginStore();
+      const config = await pluginStore.get({ key: "settings" });
+
+      mailchimp.setConfig({
+        apiKey: config.apiKey,
+        server: config.dc,
+      });
+
+      const { id: templateId } = await mailchimp.templates.create({
+        name: body.subject,
+        html: body.body,
+      });
+
+      const { id: campaignId } = await mailchimp.campaigns.create({
+        type: "regular",
+        recipients: {
+          list_id: config.listID,
+        },
+        settings: {
+          subject_line: body.subject,
+          preview_text: body.subject,
+          title: body.subject,
+          from_name: user.firstname,
+          reply_to: user.email,
+          template_id: templateId,
+          inline_css: true,
+        },
+      });
+
+      const response = await mailchimp.campaigns.send(campaignId);
+
+      return response;
+    } catch (error) {
+      throw new Error(error);
     }
   },
 });

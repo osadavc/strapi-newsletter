@@ -36,7 +36,7 @@ module.exports = {
       ctx.body = await strapi
         .plugin("strapi-newsletter")
         .service("newsletter")
-        .sendNewsletter();
+        .sendNewsletter(ctx.request.body, ctx.state.user);
     } catch (error) {
       ctx.throw(500, error);
     }

@@ -12,15 +12,11 @@ const NewsletterTable = ({ newsletterData }) => {
           </Th>
 
           <Th>
-            <Typography variant="sigma">Provider</Typography>
+            <Typography variant="sigma">Subject</Typography>
           </Th>
 
           <Th>
-            <Typography variant="sigma">Email</Typography>
-          </Th>
-
-          <Th>
-            <Typography variant="sigma">Registered At</Typography>
+            <Typography variant="sigma">Sent At</Typography>
           </Th>
         </Tr>
       </Thead>
@@ -35,13 +31,7 @@ const NewsletterTable = ({ newsletterData }) => {
 
               <Td>
                 <Typography textColor="neutral800">
-                  {newsletter.provider}
-                </Typography>
-              </Td>
-
-              <Td>
-                <Typography textColor="neutral800">
-                  {newsletter.email}
+                  {newsletter.subject}
                 </Typography>
               </Td>
 
