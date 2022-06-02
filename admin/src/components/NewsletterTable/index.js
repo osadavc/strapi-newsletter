@@ -2,7 +2,7 @@ import React from "react";
 import { Table, Thead, Tbody, Tr, Td, Th } from "@strapi/design-system/Table";
 import { Typography } from "@strapi/design-system/Typography";
 
-const UserTable = ({ userData }) => {
+const NewsletterTable = ({ newsletterData }) => {
   return (
     <Table colCount={4} rowCount={10}>
       <Thead>
@@ -26,24 +26,28 @@ const UserTable = ({ userData }) => {
       </Thead>
 
       <Tbody>
-        {userData.map((user) => {
+        {newsletterData.map((newsletter) => {
           return (
-            <Tr key={user.id}>
+            <Tr key={newsletter.id}>
               <Td>
-                <Typography textColor="neutral800">{user.id}</Typography>
-              </Td>
-
-              <Td>
-                <Typography textColor="neutral800">{user.provider}</Typography>
-              </Td>
-
-              <Td>
-                <Typography textColor="neutral800">{user.email}</Typography>
+                <Typography textColor="neutral800">{newsletter.id}</Typography>
               </Td>
 
               <Td>
                 <Typography textColor="neutral800">
-                  {new Date(user.createdAt).toLocaleString()}
+                  {newsletter.provider}
+                </Typography>
+              </Td>
+
+              <Td>
+                <Typography textColor="neutral800">
+                  {newsletter.email}
+                </Typography>
+              </Td>
+
+              <Td>
+                <Typography textColor="neutral800">
+                  {new Date(newsletter.createdAt).toLocaleString()}
                 </Typography>
               </Td>
             </Tr>
@@ -54,4 +58,4 @@ const UserTable = ({ userData }) => {
   );
 };
 
-export default UserTable;
+export default NewsletterTable;
