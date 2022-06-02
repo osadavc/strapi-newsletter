@@ -3,6 +3,7 @@ import pluginPkg from "../../package.json";
 import pluginId from "./pluginId";
 import Initializer from "./components/Initializer";
 import PluginIcon from "./components/PluginIcon";
+import SendNewsletterEditView from "./components/SendNewsletterEditView";
 
 const name = pluginPkg.strapi.name;
 
@@ -50,7 +51,12 @@ export default {
       name,
     });
   },
-  bootstrap(app) {},
+  bootstrap(app) {
+    app.injectContentManagerComponent("editView", "informations", {
+      name: "strapi-newsletter-edit-view",
+      Component: SendNewsletterEditView,
+    });
+  },
   async registerTrads({ locales }) {
     const importedTrads = await Promise.all(
       locales.map((locale) => {
