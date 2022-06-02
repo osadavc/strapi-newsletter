@@ -9,7 +9,13 @@ const getPluginStore = () => {
 };
 
 module.exports = ({ strapi }) => ({
-  async subscribe(body) {
+  async subscribe(initialBody) {
+    let body = initialBody;
+
+    if (typeof body === "string") {
+      body = JSON.parse(initialBody);
+    }
+
     if (!body.email) {
       throw new Error("Email is required");
     }
