@@ -46,7 +46,7 @@ const HomePage = () => {
         ) : hasSetup ? (
           <MainContainer />
         ) : (
-          <Box padding={8}>
+          <Box>
             <EmptyStateLayout
               icon={
                 <div
