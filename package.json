@@ -1,12 +1,16 @@
 {
   "name": "@strapi-newsletter/strapi",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Send Newsletters Easily with Strapi",
   "strapi": {
     "name": "strapi-newsletter",
     "description": "Send Newsletters Easily with Strapi",
     "kind": "plugin",
     "displayName": "Strapi Newsletter"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/osadavc/strapi-newsletter.git"
   },
   "dependencies": {
     "@mailchimp/mailchimp_marketing": "^3.0.75",
