@@ -1,10 +1,10 @@
 {
-  "name": "strapi-newsletter",
-  "version": "0.0.0",
-  "description": "This is the description of the plugin.",
+  "name": "@strapi-newsletter/strapi",
+  "version": "0.1.0",
+  "description": "Send Newsletters Easily with Strapi",
   "strapi": {
     "name": "strapi-newsletter",
-    "description": "Description of Strapi Newsletter plugin",
+    "description": "Send Newsletters Easily with Strapi",
     "kind": "plugin",
     "displayName": "Strapi Newsletter"
   },
@@ -16,11 +16,13 @@
     "styled-components": "^5.3.5"
   },
   "author": {
-    "name": "A Strapi developer"
+    "name": "Osada Vidath",
+    "email": "osadavidath@gmail.com",
+    "url": "https://github.com/osadavc"
   },
   "maintainers": [
     {
-      "name": "A Strapi developer"
+      "name": "Osada Vidath"
     }
   ],
   "engines": {
