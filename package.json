@@ -12,6 +12,9 @@
     "type": "git",
     "url": "git+https://github.com/osadavc/strapi-newsletter.git"
   },
+  "devDependencies": {
+    "typescript": "4.6.3"
+  },
   "dependencies": {
     "@mailchimp/mailchimp_marketing": "^3.0.75",
     "axios": "^0.27.2",
@@ -32,6 +35,10 @@
   "engines": {
     "node": ">=12.x.x <=16.x.x",
     "npm": ">=6.0.0"
+  },
+  "scripts": {
+    "develop": "tsc -w",
+    "build": "tsc"
   },
   "license": "MIT"
 }
