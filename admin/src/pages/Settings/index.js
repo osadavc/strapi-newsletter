@@ -1,28 +1,29 @@
 import React, { memo } from "react";
 
 import {
-  Layout,
-  ContentLayout,
   BaseHeaderLayout,
-  Select,
-  Option,
-  Button,
-  TextInput,
   Box,
+  Button,
+  ContentLayout,
+  Layout,
+  Option,
+  Select,
+  TextInput,
 } from "@strapi/design-system";
 
+import {
+  checkConvertKitConnection,
+  checkMailchimpConnection,
+  checkMailgunConnection,
+  getSettings,
+  setSettings,
+} from "../../utils/api";
 import {
   ButtonContainer,
   InputContainer,
   StyledAlert,
   StyledTypography,
 } from "./styles";
-import {
-  checkMailchimpConnection,
-  checkConvertKitConnection,
-  getSettings,
-  setSettings,
-} from "../../utils/api";
 
 const defaultSettings = {
   apiKey: "",
@@ -40,7 +41,7 @@ const Settings = () => {
   const [successfulMessage, setSuccessfulMessage] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
 
-  const providers = ["mailchimp", "convertkit"];
+  const providers = ["mailchimp", "convertkit", "mailgun"];
 
   const providerFunctions = {
     mailchimp: {
@@ -187,6 +188,94 @@ const Settings = () => {
                 }))
               }
               value={fields.formId}
+            />
+          </div>
+        </InputContainer>
+      ),
+    },
+    mailgun: {
+      name: "Mailgun",
+      validator: () => {
+        if (
+          !fields.apiKey ||
+          !fields.email ||
+          !fields.emailFrom ||
+          !fields.domain
+        ) {
+          return false;
+        }
+
+        return true;
+      },
+      checkConnection: async () => {
+        try {
+          await checkMailgunConnection();
+          setIsError(false);
+          setSuccessfulMessage("Connection Successful");
+        } catch (error) {
+          setIsError(true);
+          setSuccessfulMessage(null);
+        }
+      },
+      renderView: () => (
+        <InputContainer>
+          <div>
+            <TextInput
+              placeholder="API Key"
+              label="API Key"
+              required
+              onChange={(e) =>
+                setFields((prev) => ({
+                  ...prev,
+                  apiKey: e.target.value,
+                }))
+              }
+              value={fields.apiKey}
+            />
+          </div>
+
+          <div>
+            <TextInput
+              placeholder="example.com"
+              label="Domain"
+              required
+              onChange={(e) =>
+                setFields((prev) => ({
+                  ...prev,
+                  domain: e.target.value,
+                }))
+              }
+              value={fields.domain}
+            />
+          </div>
+
+          <div>
+            <TextInput
+              placeholder="mailinglist@example.com"
+              label="Emaillist Email"
+              required
+              onChange={(e) =>
+                setFields((prev) => ({
+                  ...prev,
+                  email: e.target.value,
+                }))
+              }
+              value={fields.email}
+            />
+          </div>
+
+          <div>
+            <TextInput
+              placeholder="from@example.com"
+              label="Email from"
+              required
+              onChange={(e) =>
+                setFields((prev) => ({
+                  ...prev,
+                  emailFrom: e.target.value,
+                }))
+              }
+              value={fields.emailFrom}
             />
           </div>
         </InputContainer>

@@ -45,6 +45,11 @@ module.exports = [
   },
   {
     method: "GET",
+    path: "/mailgun/ping",
+    handler: "mailgun.checkConnection",
+  },
+  {
+    method: "GET",
     path: "/convertkit/ping",
     handler: "convertkit.checkConnection",
   },

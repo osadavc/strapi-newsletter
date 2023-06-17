@@ -8,6 +8,8 @@ export const getSetup = () => instance.get("/setup");
 
 export const checkMailchimpConnection = () => instance.get("/mailchimp/ping");
 
+export const checkMailgunConnection = () => instance.get("/mailgun/ping");
+
 export const checkConvertKitConnection = () => instance.get("/convertkit/ping");
 
 export const getAllRegisteredUsers = () => instance.get("/newsletter/users");

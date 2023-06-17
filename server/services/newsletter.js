@@ -29,6 +29,12 @@ module.exports = ({ strapi }) => ({
           .service("mailchimp")
           .subscribeNewUser(body.email);
       }
+      case "mailgun": {
+        await strapi
+          .plugin("strapi-newsletter")
+          .service("mailgun")
+          .subscribeNewUser(body.email);
+      }
     }
 
     return await strapi.entityService.create(
@@ -63,6 +69,12 @@ module.exports = ({ strapi }) => ({
         await strapi
           .plugin("strapi-newsletter")
           .service("mailchimp")
+          .sendNewsletter(body, user);
+      }
+      case "mailgun": {
+        await strapi
+          .plugin("strapi-newsletter")
+          .service("mailgun")
           .sendNewsletter(body, user);
       }
     }

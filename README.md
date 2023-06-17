@@ -20,6 +20,7 @@ You have two available providers to use, namely,
 
 1. Mailchimp
 2. ConvertKit
+2. Mailgun
 
 ### Steps
 
